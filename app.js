@@ -97,14 +97,29 @@ addToCartBtn.addEventListener('click', (event) =>{
     console.log(newProduct);
 
     //Populate table
-    let row = table.insertRow(table.rows.length);
-    let cell = row.insertCell(0);
-    let cell2 = row.insertCell(1);
-    let cell3 = row.insertCell(2);
-    let cell4 = row.insertCell(3);
+    let newRow = table.insertRow(table.rows.length);
 
-    cell.innerHTML = newProduct.id;
-    cell2.innerHTML =newProduct.desc;
-    cell3.innerHTML = newProduct.price;
-    cell4.innerHTML = newProduct.quantity;
+    let idCell = newRow.insertCell(0);
+    let descCell = newRow.insertCell(1);
+    let priceCell = newRow.insertCell(2);
+    let qtyCell = newRow.insertCell(3);
+    let actionCell = newRow.insertCell(4);
+
+
+    idCell.innerHTML = newProduct.id;
+    descCell.innerHTML =newProduct.desc;
+    priceCell.innerHTML = newProduct.price;
+    qtyCell.innerHTML = newProduct.quantity;
+
+    let delete_btn = document.createElement('button');
+    delete_btn.innerHTML = 'DELETE';
+    delete_btn.classList.add('btn');
+    delete_btn.classList.add('btn-danger');
+
+    delete_btn.addEventListener('click', (event) =>{
+        event.preventDefault();
+        console.log('Delete button clicked')
+    })
+
+    actionCell.appendChild(delete_btn);
 })
