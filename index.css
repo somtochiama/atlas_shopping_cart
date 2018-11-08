@@ -1,0 +1,8 @@
+tbody{
+    background-color: #fff;
+    color: black;
+}
+
+tbody > tr > td{
+    border-right: 1px solid black;
+}
