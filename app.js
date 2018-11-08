@@ -1,5 +1,3 @@
-
-//This class is instantiated with a list(array) of products the user has added to a cart
 class ShoppingCart {
     constructor(listOfItems) {
         this.listOfItems = listOfItems; //Holds all the items that have been added to the shopping car
@@ -46,6 +44,20 @@ class Product {
         this.price = price;
         this.quantity = quantity;
     }
+  
+
+//     addToCart() {
+//         myShop1.addItem(this)
+//     }
+
+//     deleteItem() {
+//         //I used a dummy variable to indicate the list of products that 
+//         //should contain all the classes instantiated when a products is created
+//         let index = listOfProducts.indexOf(this);
+//         listOfProducts.splice(index, 1);
+      
+//     }
+
 }
 
 let myItems = []
@@ -80,6 +92,7 @@ addProductBtn.addEventListener('click', (event) =>{
 
     let newProduct = new Product(productIdVal, productDescVal, productPriceVal, productQtyVal);
 
+  
     //Insert the product into the all products table
     let newProductRow = allProducts.insertRow(allProducts.rows.length);
 
@@ -173,3 +186,19 @@ function removeProductFromStore(){
     let tableRow = this.parentNode.parentNode;
     tableRow.remove();
 }
+
+
+//     console.log(newProduct);
+
+    //Populate table
+//     let row = table.insertRow(table.rows.length);
+//     let cell = row.insertCell(0);
+//     let cell2 = row.insertCell(1);
+//     let cell3 = row.insertCell(2);
+//     let cell4 = row.insertCell(3);
+
+//     cell.innerHTML = newProduct.id;
+//     cell2.innerHTML =newProduct.desc;
+//     cell3.innerHTML = newProduct.price;
+//     cell4.innerHTML = newProduct.quantity;
+// })
