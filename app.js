@@ -5,11 +5,13 @@ class ShoppingCart {
 
     addItem(item) {
         this.listOfItems.push(item);
+        //update table
     }
 
     deleteItem(item) {
         let index = this.listOfItems.indexOf(item);
         this.listOfItems.splice(index, 1);
+        //remove item from table
     }
 
     setTotal() {
@@ -106,6 +108,3 @@ addToCartBtn.addEventListener('click', (event) =>{
     cell3.innerHTML = newProduct.price;
     cell4.innerHTML = newProduct.quantity;
 })
-
-    } 
-}
