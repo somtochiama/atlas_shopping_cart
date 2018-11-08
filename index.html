@@ -36,6 +36,7 @@
                 <button style="margin-top: 15px" type="submit" class="btn btn-primary" id="addProduct">Add Product</button><br />
 
                 <table class="table table-dark" id="allProducts">
+                    <h4 class="table-titles">Available Products</h4>
                     <thead>
                       <tr>
                         <th scope="col">ID</th>
@@ -49,8 +50,9 @@
                     </tbody>
                 </table>
 
-                <table class="table table-dark" id="shoppingCart">
-                    <thead>
+                <table class="table" id="shoppingCart">
+                    <h4 class="table-titles">Your shopping cart</h4>
+                    <thead class="thead-dark">
                       <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Quantity</th>
@@ -63,7 +65,7 @@
                     </tbody>
                 </table>
 
-                <h3 id="grandTotal">Grand total</h3>
+                <h3 id="grandTotal">Grand total : 0</h3>
         </div>
         <script src="app.js" type="text/javascript"></script>
     </body>

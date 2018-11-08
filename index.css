@@ -1,12 +1,12 @@
-tbody{
-    background-color: #fff;
-    color: black;
-}
-
-tbody > tr > td{
-    border-right: 1px solid black;
+.table-titles{
+    text-align: center;
+    margin-top: 20px;
 }
 
 #allProducts{
     margin-bottom: 20px;
+}
+
+.removeBtn{
+    margin-right: 10px;
 }

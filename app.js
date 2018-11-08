@@ -86,72 +86,90 @@ addProductBtn.addEventListener('click', (event) =>{
     //Creating the table row cells
     let newProductIdCell = newProductRow.insertCell(0);
     let newProductDescCell = newProductRow.insertCell(1);
-    let newpriceCell = newProductRow.insertCell(2);
-    let newqtyCell = newProductRow.insertCell(3);
-    let newactionCell = newProductRow.insertCell(4);
+    let newProductPriceCell = newProductRow.insertCell(2);
+    let newProductQtyCell = newProductRow.insertCell(3);
+    let newProductActionsCell = newProductRow.insertCell(4);
 
     newProductIdCell.innerHTML = newProduct.id;
     newProductDescCell.innerHTML =newProduct.desc;
-    newpriceCell.innerHTML = newProduct.price;
-    newqtyCell.innerHTML = newProduct.quantity;
+    newProductPriceCell.innerHTML = newProduct.price;
+    newProductQtyCell.innerHTML = newProduct.quantity;
 
-    let remove_btn = document.createElement('button');
-    remove_btn.innerHTML = "REMOVE";
-    remove_btn.addEventListener('click', removeItemFromList)
+    //Creates the remove and add to cart button
+    let removeProductBtn = document.createElement('button');
+    removeProductBtn.innerHTML = "REMOVE";
+    removeProductBtn.classList.add('btn');
+    removeProductBtn.classList.add('btn-danger');
+    removeProductBtn.classList.add('removeBtn');
+
+    removeProductBtn.addEventListener('click', removeProductFromStore)
+
     let addToCartBtn = document.createElement('button');
     addToCartBtn.innerHTML = "ADD TO CART";
+    addToCartBtn.classList.add('btn');
+    addToCartBtn.classList.add('btn-primary');
     addToCartBtn.addEventListener('click', (event) =>{
-        //Add to shopping cart
-        //Populate table
+        //Add product to shopping cart
         myCart.addItem(newProduct);
-    let newRow = shoppingCart.insertRow(shoppingCart.rows.length);
 
-    let idCell = newRow.insertCell(0);
-    let descCell = newRow.insertCell(1);
-    let priceCell = newRow.insertCell(2);
-    let qtyCell = newRow.insertCell(3);
-    let actionCell = newRow.insertCell(4);
+        //Inserts a new row into the shopping cart table
+        let newRow = shoppingCart.insertRow(shoppingCart.rows.length);
 
-    idCell.innerHTML = newProduct.id;
-    descCell.innerHTML =newProduct.desc;
-    priceCell.innerHTML = newProduct.price;
-    qtyCell.innerHTML = newProduct.quantity;
+        //Creates cells for the newly created row
+        let idCell = newRow.insertCell(0);
+        let descCell = newRow.insertCell(1);
+        let priceCell = newRow.insertCell(2);
+        let qtyCell = newRow.insertCell(3);
+        let actionCell = newRow.insertCell(4);
 
-    let delete_btn = document.createElement('button');
-    delete_btn.innerHTML = 'DELETE';
-    delete_btn.classList.add('btn');
-    delete_btn.classList.add('btn-danger');
+        idCell.innerHTML = newProduct.id;
+        descCell.innerHTML =newProduct.desc;
+        priceCell.innerHTML = newProduct.price;
+        qtyCell.innerHTML = newProduct.quantity;
 
-    delete_btn.addEventListener('click', deleteProduct)
-    actionCell.appendChild(delete_btn);
-    })
+        let deleteFromCartBtn = document.createElement('button');
+        deleteFromCartBtn.innerHTML = 'DELETE';
+        deleteFromCartBtn.classList.add('btn');
+        deleteFromCartBtn.classList.add('btn-danger');
 
-    newactionCell.appendChild(remove_btn);
-    newactionCell.appendChild(addToCartBtn);
+        deleteFromCartBtn.addEventListener('click', deleteProductFromCart)
+        actionCell.appendChild(deleteFromCartBtn);
+    });
+
+    //Appends the buttons to the actions cell
+    newProductActionsCell.appendChild(removeProductBtn);
+    newProductActionsCell.appendChild(addToCartBtn);
 
 })
 
-function deleteProduct(){
+function deleteProductFromCart(){
+    //Get the row that was clicked
     let tableRow = this.parentNode.parentNode;
-    let tableCells = tableRow.getElementsByTagName('td');
-    let productId = tableCells[0].innerText;
-    let productDesc = tableCells[1].innerText;
-    let productPrice = tableCells[2].innerText;
-    let productQty = tableCells[3].innerText;
 
-    let productToDelete = new Product(productId, productDesc, productPrice, productQty);
+    //Get the cells of the table row that was clicked
+    let tableCells = tableRow.getElementsByTagName('td');
+
+    let productToDeleteId = tableCells[0].innerText;
+    let productToDeleteDesc = tableCells[1].innerText;
+    let productToDeletePrice = tableCells[2].innerText;
+    let productToDeleteQty = tableCells[3].innerText;
+
+    let productToDelete = new Product(productToDeleteId, productToDeleteDesc,
+         productToDeletePrice, productToDeleteQty);
+    
+    //Delete the item from the shopping cart
     myCart.deleteItem(productToDelete);
-    console.log(productToDelete);
-    tableRow.remove();
+    tableRow.remove(); //Remove the row from the DOM
 }
 
 function updateTotalText(){
-    //This updates the total text in the DOM to show the total price of items in the shopping cart
+    /*This updates the total text in the DOM to show the total 
+    price of items in the shopping cart*/
     let totalPrice = myCart.calcGrandTotal();
     totalPriceText.innerHTML = "Grand Total: " + totalPrice;
 }
 
-function removeItemFromList(){
+function removeProductFromStore(){
     let tableRow = this.parentNode.parentNode;
     tableRow.remove();
 }
