@@ -62,5 +62,50 @@ class Product {
         //should contain all the classes instantiated when a products is created
         let index = listOfProducts.indexOf(this);
         listOfProducts.splice(index, 1);
+      
+    }
+}
+
+//Event handling
+const addToCartBtn = document.getElementById('add_to_cart');
+const table = document.getElementById('shopping-cart-table').getElementsByTagName('tbody')[0];
+
+//User inputs
+const productId = document.getElementById('Id');
+const productDesc = document.getElementById('Description');
+const productQty = document.getElementById('Quantity');
+const productPrice = document.getElementById('Price');
+
+addToCartBtn.addEventListener('click', (event) =>{
+    event.preventDefault();
+    console.log('Button has been clicked');
+
+    let productIdVal = productId.value;
+    let productDescVal = productDesc.value;
+    let productQtyVal = productQty.value;
+    let productPriceVal = productPrice.value;
+
+    if(productIdVal == "" || productDescVal == "" || productQtyVal == "" || productPriceVal == ""){
+        alert("YPlease fill all the input fields");
+        return;
+    }
+
+    let newProduct = new Product(productIdVal, productDescVal, productPriceVal, productQtyVal);
+
+    console.log(newProduct);
+
+    //Populate table
+    let row = table.insertRow(table.rows.length);
+    let cell = row.insertCell(0);
+    let cell2 = row.insertCell(1);
+    let cell3 = row.insertCell(2);
+    let cell4 = row.insertCell(3);
+
+    cell.innerHTML = newProduct.id;
+    cell2.innerHTML =newProduct.desc;
+    cell3.innerHTML = newProduct.price;
+    cell4.innerHTML = newProduct.quantity;
+})
+
     } 
 }
