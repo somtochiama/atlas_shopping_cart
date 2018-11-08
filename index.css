@@ -6,3 +6,7 @@ tbody{
 tbody > tr > td{
     border-right: 1px solid black;
 }
+
+#all-items-table{
+    margin-bottom: 20px;
+}

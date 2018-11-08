@@ -77,6 +77,7 @@ class Product {
 const addToCartBtn = document.getElementById('add_to_cart');
 const table = document.getElementById('shopping-cart-table').getElementsByTagName('tbody')[0];
 const totalPriceText = document.getElementById('grand-total');
+const allItemTable = document.getElementById('all-items-table');
 
 //User inputs
 const productId = document.getElementById('Id');
@@ -99,11 +100,31 @@ addToCartBtn.addEventListener('click', (event) =>{
     }
 
     let newProduct = new Product(productIdVal, productDescVal, productPriceVal, productQtyVal);
-    myCart.addItem(newProduct);
+    //myCart.addItem(newProduct);
 
     console.log(newProduct);
 
-    //Populate table
+    let newItemRow = allItemTable.insertRow(allItemTable.rows.length);
+    let newidCell = newItemRow.insertCell(0);
+    let newdescCell = newItemRow.insertCell(1);
+    let newpriceCell = newItemRow.insertCell(2);
+    let newqtyCell = newItemRow.insertCell(3);
+    let newactionCell = newItemRow.insertCell(4);
+
+    newidCell.innerHTML = newProduct.id;
+    newdescCell.innerHTML =newProduct.desc;
+    newpriceCell.innerHTML = newProduct.price;
+    newqtyCell.innerHTML = newProduct.quantity;
+
+    let remove_btn = document.createElement('button');
+    remove_btn.innerHTML = "REMOVE";
+    remove_btn.addEventListener('click', removeItemFromList)
+    let addToCartBtn = document.createElement('button');
+    addToCartBtn.innerHTML = "ADD TO CART";
+    addToCartBtn.addEventListener('click', (event) =>{
+        //Add to shopping cart
+        //Populate table
+        myCart.addItem(newProduct);
     let newRow = table.insertRow(table.rows.length);
 
     let idCell = newRow.insertCell(0);
@@ -111,7 +132,6 @@ addToCartBtn.addEventListener('click', (event) =>{
     let priceCell = newRow.insertCell(2);
     let qtyCell = newRow.insertCell(3);
     let actionCell = newRow.insertCell(4);
-
 
     idCell.innerHTML = newProduct.id;
     descCell.innerHTML =newProduct.desc;
@@ -125,6 +145,11 @@ addToCartBtn.addEventListener('click', (event) =>{
 
     delete_btn.addEventListener('click', deleteProduct)
     actionCell.appendChild(delete_btn);
+    })
+
+    newactionCell.appendChild(remove_btn);
+    newactionCell.appendChild(addToCartBtn);
+
 })
 
 function deleteProduct(){
@@ -144,4 +169,9 @@ function deleteProduct(){
 function updateTotal(){
     let totalPrice = myCart.calcGrandTotal();
     totalPriceText.innerHTML = "Grand Total: " + totalPrice;
+}
+
+function removeItemFromList(){
+    let tableRow = this.parentNode.parentNode;
+    tableRow.remove();
 }
