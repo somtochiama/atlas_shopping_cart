@@ -1,5 +1,3 @@
-
-//This class is instantiated with a list(array) of products the user has added to a cart
 class ShoppingCart {
     constructor(listOfItems) {
         this.listOfItems = listOfItems;
@@ -64,6 +62,7 @@ class Product {
         //should contain all the classes instantiated when a products is created
         let index = listOfProducts.indexOf(this);
         listOfProducts.splice(index, 1);
+      
     }
 }
 
@@ -107,3 +106,6 @@ addToCartBtn.addEventListener('click', (event) =>{
     cell3.innerHTML = newProduct.price;
     cell4.innerHTML = newProduct.quantity;
 })
+
+    } 
+}
