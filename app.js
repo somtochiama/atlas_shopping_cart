@@ -2,25 +2,26 @@
 //This class is instantiated with a list(array) of products the user has added to a cart
 class ShoppingCart {
     constructor(listOfItems) {
-        this.listOfItems = listOfItems;
+        this.listOfItems = listOfItems; //Holds all the items that have been added to the shopping car
     }
 
     addItem(item) {
         this.listOfItems.push(item);
-        console.log("After Adding",this.listOfItems);
-        this.setTotal();
-        updateTotal();
+        this.setTotal(); //Calculates the total of the product that was just added
+        updateTotalText(); //Updates the DOM to show the total pprice of items currently in the cart
     }
 
     deleteItem(item) {
         let index = this.listOfItems.indexOf(item);
-        this.listOfItems.splice(index, 1);
-        this.setTotal();
-        updateTotal();
-        console.log("After Deleting",this.listOfItems);
+        /*Removes the product from the listOfItems array which st
+        ores all the items in the shopping cart */
+        this.listOfItems.splice(index, 1); //
+        this.setTotal(); //Calculates the total of the product that was just removed
+        updateTotalText();
     }
 
     setTotal() {
+        //Calculates the price of items that have been added
         this.listOfItems.forEach( product => {
             let total = product.price * product.quantity
             product.total = total;
@@ -28,6 +29,7 @@ class ShoppingCart {
     }
 
     calcGrandTotal() {
+        //Calculates the total of all the items in the shopping cart
         let grandTotal = 0;
         this.listOfItems.forEach( product => {
             grandTotal += product.total
@@ -36,23 +38,7 @@ class ShoppingCart {
     }
 }
 
-let myItems = []
-const myCart = new ShoppingCart(myItems);
-
-myItems = [
-    {
-        name:"bag",
-        price: "20",
-        quantity: "100"
-    },
-    {
-        name:"quantum",
-        price: "10",
-        quantity: "50"      
-    }
-]
-
-
+//This represents a product in the store
 class Product {
     constructor(id, desc, price, quantity) {
         this.id = id;
@@ -60,24 +46,18 @@ class Product {
         this.price = price;
         this.quantity = quantity;
     }
-
-    addToCart() {
-        myShop1.addItem(this)
-    }
-
-    deleteItem() {
-        //I used a dummy variable to indicate the list of products that 
-        //should contain all the classes instantiated when a products is created
-        let index = listOfProducts.indexOf(this);
-        listOfProducts.splice(index, 1);
-    }
 }
 
+let myItems = []
+//Creates an empty shopping cart
+const myCart = new ShoppingCart(myItems);
+
 //Event handling
-const addToCartBtn = document.getElementById('add_to_cart');
-const table = document.getElementById('shopping-cart-table').getElementsByTagName('tbody')[0];
-const totalPriceText = document.getElementById('grand-total');
-const allItemTable = document.getElementById('all-items-table');
+const addProductBtn = document.getElementById('addProduct');
+const allProducts = document.getElementById('allProducts');
+const shoppingCart = document.getElementById('shoppingCart').getElementsByTagName('tbody')[0];
+const totalPriceText = document.getElementById('grandTotal');
+
 
 //User inputs
 const productId = document.getElementById('Id');
@@ -85,9 +65,8 @@ const productDesc = document.getElementById('Description');
 const productQty = document.getElementById('Quantity');
 const productPrice = document.getElementById('Price');
 
-addToCartBtn.addEventListener('click', (event) =>{
+addProductBtn.addEventListener('click', (event) =>{
     event.preventDefault();
-    console.log('Button has been clicked');
 
     let productIdVal = productId.value;
     let productDescVal = productDesc.value;
@@ -95,24 +74,24 @@ addToCartBtn.addEventListener('click', (event) =>{
     let productPriceVal = productPrice.value;
 
     if(productIdVal == "" || productDescVal == "" || productQtyVal == "" || productPriceVal == ""){
-        alert("YPlease fill all the input fields");
+        alert("Please fill all the input fields");
         return;
     }
 
     let newProduct = new Product(productIdVal, productDescVal, productPriceVal, productQtyVal);
-    //myCart.addItem(newProduct);
 
-    console.log(newProduct);
+    //Insert the product into the all products table
+    let newProductRow = allProducts.insertRow(allProducts.rows.length);
 
-    let newItemRow = allItemTable.insertRow(allItemTable.rows.length);
-    let newidCell = newItemRow.insertCell(0);
-    let newdescCell = newItemRow.insertCell(1);
-    let newpriceCell = newItemRow.insertCell(2);
-    let newqtyCell = newItemRow.insertCell(3);
-    let newactionCell = newItemRow.insertCell(4);
+    //Creating the table row cells
+    let newProductIdCell = newProductRow.insertCell(0);
+    let newProductDescCell = newProductRow.insertCell(1);
+    let newpriceCell = newProductRow.insertCell(2);
+    let newqtyCell = newProductRow.insertCell(3);
+    let newactionCell = newProductRow.insertCell(4);
 
-    newidCell.innerHTML = newProduct.id;
-    newdescCell.innerHTML =newProduct.desc;
+    newProductIdCell.innerHTML = newProduct.id;
+    newProductDescCell.innerHTML =newProduct.desc;
     newpriceCell.innerHTML = newProduct.price;
     newqtyCell.innerHTML = newProduct.quantity;
 
@@ -125,7 +104,7 @@ addToCartBtn.addEventListener('click', (event) =>{
         //Add to shopping cart
         //Populate table
         myCart.addItem(newProduct);
-    let newRow = table.insertRow(table.rows.length);
+    let newRow = shoppingCart.insertRow(shoppingCart.rows.length);
 
     let idCell = newRow.insertCell(0);
     let descCell = newRow.insertCell(1);
@@ -166,7 +145,8 @@ function deleteProduct(){
     tableRow.remove();
 }
 
-function updateTotal(){
+function updateTotalText(){
+    //This updates the total text in the DOM to show the total price of items in the shopping cart
     let totalPrice = myCart.calcGrandTotal();
     totalPriceText.innerHTML = "Grand Total: " + totalPrice;
 }
